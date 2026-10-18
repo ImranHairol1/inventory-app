@@ -137,7 +137,6 @@ export default function Products() {
       </div>
 
       <div className="card chart-card">
-        <h2>Stock left per item</h2>
         <StockChart products={allProducts} />
       </div>
     </div>
