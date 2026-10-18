@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import api from '../api'
-import { useAuth } from '../AuthContext'
 import { CATEGORIES } from '../constants'
+import StockChart from '../components/StockChart'
 
 export default function Products() {
-  const { username, logout } = useAuth()
-  const navigate = useNavigate()
-
   const [products, setProducts] = useState([])
+  const [allProducts, setAllProducts] = useState([])
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('')
   const [sortBy, setSortBy] = useState('createdAt')
@@ -17,6 +15,7 @@ export default function Products() {
   const [error, setError] = useState('')
   const [reloadKey, setReloadKey] = useState(0)
 
+  // The table: follows the search, category and sort controls
   useEffect(() => {
     const timer = setTimeout(async () => {
       setLoading(true)
@@ -35,6 +34,14 @@ export default function Products() {
     return () => clearTimeout(timer)
   }, [search, category, sortBy, direction, reloadKey])
 
+  // The chart: always all of your items
+  useEffect(() => {
+    api
+      .get('/products', { params: { sortBy: 'name', direction: 'asc' } })
+      .then(({ data }) => setAllProducts(data))
+      .catch(() => {})
+  }, [reloadKey])
+
   const handleDelete = async (product) => {
     if (!window.confirm(`Delete "${product.name}"?`)) return
     try {
@@ -43,11 +50,6 @@ export default function Products() {
     } catch {
       setError('Could not delete the product')
     }
-  }
-
-  const handleLogout = () => {
-    logout()
-    navigate('/login')
   }
 
   const totalValue = products.reduce((sum, p) => sum + Number(p.price) * p.quantity, 0)
@@ -60,10 +62,6 @@ export default function Products() {
           <span className="muted">
             {products.length} item(s) · stock value RM {totalValue.toFixed(2)}
           </span>
-        </div>
-        <div className="topbar-right">
-          <span className="muted">Hi, {username}</span>
-          <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
         </div>
       </header>
 
@@ -95,7 +93,7 @@ export default function Products() {
 
         {error && <div className="alert">{error}</div>}
 
-        <div className="table-wrap">
+        <div className="table-wrap table-scroll">
           <table>
             <thead>
               <tr>
@@ -116,7 +114,7 @@ export default function Products() {
                   <tr key={p.id}>
                     <td>
                       <strong>{p.name}</strong>
-                      {p.description && <div className="muted small">{p.description}</div>}
+                      {p.description && <div className="muted small desc">{p.description}</div>}
                     </td>
                     <td>{p.category || '-'}</td>
                     <td>
@@ -136,6 +134,11 @@ export default function Products() {
             </tbody>
           </table>
         </div>
+      </div>
+
+      <div className="card chart-card">
+        <h2>Stock left per item</h2>
+        <StockChart products={allProducts} />
       </div>
     </div>
   )
