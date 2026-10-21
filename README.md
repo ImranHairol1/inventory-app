@@ -149,7 +149,7 @@ A complete video presentation and demonstration of the Inventory Management Syst
 ### 📺 Watch the Project Demonstration
 
 [![Inventory Management System Video Presentation](https://img.youtube.com/vi/4PzkmHnI3n4/hqdefault.jpg)](https://youtu.be/4PzkmHnI3n4)
-- Please put the higher quality for the best experience
+- Please put the higher quality resolution for the best experience
   
 **▶️ [Click Here to Watch the Full Video Presentation](https://youtu.be/4PzkmHnI3n4)**
 
