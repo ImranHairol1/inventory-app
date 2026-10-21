@@ -142,6 +142,16 @@ Typical status codes: `200` OK, `201` created, `204` deleted, `400` invalid inpu
 - Pagination for large product lists
 - Automated tests and Docker setup
 
+## 🎥 Video Presentation
+
+A complete video presentation and demonstration of the Inventory Management System, showcasing the application's features, functionality, and implementation.
+
+### 📺 Watch the Project Demonstration
+
+[![Inventory Management System Video Presentation](https://img.youtube.com/vi/4PzkmHnI3n4/hqdefault.jpg)](https://youtu.be/4PzkmHnI3n4)
+
+**▶️ [Click Here to Watch the Full Video Presentation](https://youtu.be/4PzkmHnI3n4)**
+
 ## Author
 
 Built by ImranHairol1 for the Neurogine full-stack assignment.
